@@ -1,0 +1,10 @@
+.idea
+/venv
+file/logs/*
+file/dollar_exchange_rate.txt
+database_parser_dollars.db
+Old file/start_parsing_rub_dollar.bat
+start_telegram.bat
+/logs/
+/Dump/
+/Old file/

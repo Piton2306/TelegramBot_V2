@@ -1,0 +1,21 @@
+2025-01-29 12:13:10,360 - INFO - parsing_rub_dollar - Начало цикла парсинга курсов валют
+2025-01-29 12:13:10,362 - WARNING - parsing_rub_dollar - Нет записей в таблице Dollars. Используется начальное значение 0.
+2025-01-29 12:13:10,509 - INFO - parsing_rub_dollar - Последний курс USD: 0
+2025-01-29 12:13:10,509 - INFO - parsing_rub_dollar - Текущий курс USD: 97.97
+2025-01-29 12:13:10,515 - INFO - parsing_rub_dollar - Цена USD выросла: 97.97 на 97.97
+2025-01-29 12:13:10,517 - WARNING - parsing_rub_dollar - Нет записей в таблице Euros. Используется начальное значение 0.
+2025-01-29 12:13:10,635 - INFO - parsing_rub_dollar - Последний курс EUR: 0
+2025-01-29 12:13:10,635 - INFO - parsing_rub_dollar - Текущий курс EUR: 101.6
+2025-01-29 12:13:10,640 - INFO - parsing_rub_dollar - Цена EUR выросла: 101.6 на 101.6
+2025-01-29 12:14:10,760 - INFO - parsing_rub_dollar - Последний курс USD: 97.97
+2025-01-29 12:14:10,761 - INFO - parsing_rub_dollar - Текущий курс USD: 97.97
+2025-01-29 12:14:10,761 - INFO - parsing_rub_dollar - Цена USD не изменилась: 97.97
+2025-01-29 12:14:10,877 - INFO - parsing_rub_dollar - Последний курс EUR: 101.6
+2025-01-29 12:14:10,877 - INFO - parsing_rub_dollar - Текущий курс EUR: 101.6
+2025-01-29 12:14:10,878 - INFO - parsing_rub_dollar - Цена EUR не изменилась: 101.6
+2025-01-29 12:15:10,990 - INFO - parsing_rub_dollar - Последний курс USD: 97.97
+2025-01-29 12:15:10,990 - INFO - parsing_rub_dollar - Текущий курс USD: 97.97
+2025-01-29 12:15:10,990 - INFO - parsing_rub_dollar - Цена USD не изменилась: 97.97
+2025-01-29 12:15:11,137 - INFO - parsing_rub_dollar - Последний курс EUR: 101.6
+2025-01-29 12:15:11,137 - INFO - parsing_rub_dollar - Текущий курс EUR: 101.6
+2025-01-29 12:15:11,137 - INFO - parsing_rub_dollar - Цена EUR не изменилась: 101.6

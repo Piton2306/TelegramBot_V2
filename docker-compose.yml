@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  app-parsing:
+    image: python:3.12.3
+    container_name: parsing
+    restart: always
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    environment:
+      - TZ=Europe/Moscow
+    command: >
+      bash -c "python -m venv venv &&
+               source venv/bin/activate &&
+               pip install --no-cache-dir -r requirements.txt &&
+               python -m src.parsing.currency_parser"
+
+  app-telegram:
+    image: python:3.12.3
+    container_name: telegram
+    restart: always
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    environment:
+      - TZ=Europe/Moscow
+    command: >
+      bash -c "python -m venv venv &&
+               source venv/bin/activate &&
+               pip install --no-cache-dir -r requirements.txt &&
+               python -m src.telegram_bot.bot"
+
+  db:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
