@@ -9,7 +9,6 @@ from src.logging_config import setup_logging
 # Настройка логирования
 logger = setup_logging(log_file='sql_postgress.log', logger_name='sql_postgress')
 
-
 def create_connection():
     try:
         connection = psycopg2.connect(**DB_PARAMS)
@@ -19,9 +18,7 @@ def create_connection():
         logger.error(f"Ошибка соединения с БД: {e}")
         raise
 
-
 connection = create_connection()
-
 
 def add_database():
     with connection.cursor() as cursor:
@@ -48,7 +45,6 @@ def add_database():
         connection.commit()
         logger.info("Таблицы Dollars и Euros созданы или уже существуют")
 
-
 def add_column(name_table, name_column, data_type):
     with connection.cursor() as cursor:
         cursor.execute(f'''
@@ -57,7 +53,6 @@ def add_column(name_table, name_column, data_type):
         ''')
         connection.commit()
         logger.info(f"Столбец {name_column} добавлен в таблицу {name_table}")
-
 
 def insert_into_currency(table_name, price, difference):
     with connection.cursor() as cursor:
@@ -77,7 +72,6 @@ def insert_into_currency(table_name, price, difference):
         logger.info(
             f"Запись добавлена в таблицу {table_name}: Дата={date}, Время={time_now}, Цена={price}, Разница={difference}")
 
-
 def select_last_telegram(table_name):
     with connection.cursor() as cursor:
         if table_name == 'Dollars':
@@ -92,11 +86,10 @@ def select_last_telegram(table_name):
             ''')
         result = cursor.fetchone()
         if result:
-            return f'{result[2]} - - {result[1]} || {result[0]}'
+            return f'💵 Курс: {result[2]}\n⏰ Время: {result[1]}\n📅 Дата: {result[0]}'
         else:
             logger.warning(f"Нет записей в таблице {table_name}")
             return None
-
 
 def select_last_float(table_name):
     with connection.cursor() as cursor:

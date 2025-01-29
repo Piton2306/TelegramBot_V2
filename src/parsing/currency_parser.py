@@ -41,8 +41,6 @@ def process_currency(currency, file_path, table_name):
         old_price = 0
 
     new_price = get_currency_rate_from_api(currency)
-    logger.info(f"Последний курс {currency}: {old_price}")
-    logger.info(f"Текущий курс {currency}: {new_price}")
 
     if old_price < new_price:
         save_file(file_path, str(new_price))
