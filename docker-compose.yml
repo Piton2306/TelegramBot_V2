@@ -3,7 +3,7 @@ version: '3.8'
 services:
   app-parsing:
     image: python:3.12.3
-    container_name: parsing
+    container_name: parsing_2
     restart: always
     volumes:
       - .:/usr/src/app
@@ -18,7 +18,7 @@ services:
 
   app-telegram:
     image: python:3.12.3
-    container_name: telegram
+    container_name: telegram_2
     restart: always
     volumes:
       - .:/usr/src/app

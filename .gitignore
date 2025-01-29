@@ -8,3 +8,8 @@ start_telegram.bat
 /logs/
 /Dump/
 /Old file/
+/file/
+/src/parsing/file/
+/src/parsing/logs/
+/src/telegram_bot/logs/
+
