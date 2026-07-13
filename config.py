@@ -3,7 +3,7 @@ import os
 # Database configuration
 DB_PARAMS = {
     'dbname': 'postgres',
-    'host': os.getenv('DB_HOST', 'host.docker.internal'),
+    'host': os.getenv('DB_HOST', 'db'),
     'port': '5432',
     'user': 'root',
     'password': '12345'
