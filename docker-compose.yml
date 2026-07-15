@@ -9,9 +9,7 @@ services:
     environment:
       - TZ=Europe/Moscow
     command: >
-      bash -c "python -m venv venv &&
-               source venv/bin/activate &&
-               pip install --no-cache-dir -r requirements.txt &&
+      bash -c "pip install --no-cache-dir -r requirements.txt &&
                python -m src.parsing.currency_parser"
 
   app-telegram:
@@ -24,9 +22,7 @@ services:
     environment:
       - TZ=Europe/Moscow
     command: >
-      bash -c "python -m venv venv &&
-               source venv/bin/activate &&
-               pip install --no-cache-dir -r requirements.txt &&
+      bash -c "pip install --no-cache-dir -r requirements.txt &&
                python -m src.telegram_bot.bot"
 
   db:
