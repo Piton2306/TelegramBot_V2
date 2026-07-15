@@ -39,15 +39,9 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: 12345
     volumes:
-      - pgdata:/var/lib/postgresql/data
-      
+      - /DATA/AppData/TelegramBot_v2/pgdata:/var/lib/postgresql
   adminer:
     image: adminer
     restart: always
     ports:
       - "8080:8080"
-
-volumes:
-  pgdata:
-
-
