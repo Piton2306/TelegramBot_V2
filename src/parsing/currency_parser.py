@@ -27,7 +27,8 @@ def save_file(file_path, text="Пример текста"):
 
 def get_currency_rate_from_api(currency):
     url = 'https://www.cbr-xml-daily.ru/daily_json.js'
-    response = requests.get(url)
+    # Добавлен timeout=10 секунд. Если API ЦБ не ответит, скрипт не зависнет, а выбросит ошибку
+    response = requests.get(url, timeout=10)
     response.raise_for_status()
     data = response.json()
     rate = data['Valute'][currency]['Value']
@@ -35,35 +36,43 @@ def get_currency_rate_from_api(currency):
 
 
 def process_currency(currency, file_path, table_name):
-    old_price = select_last_float(table_name)
-    if old_price is None:
-        logger.warning(f"Нет записей в таблице {table_name}. Используется начальное значение 0.")
-        old_price = 0
+    # Каждую валюту обрабатываем в своем блоке try-except, 
+    # чтобы падение одной валюты не блокировало обработку другой
+    try:
+        old_price = select_last_float(table_name)
+        if old_price is None:
+            logger.warning(f"Нет записей в таблице {table_name}. Используется начальное значение 0.")
+            old_price = 0
 
-    new_price = get_currency_rate_from_api(currency)
+        new_price = get_currency_rate_from_api(currency)
 
-    if old_price < new_price:
-        save_file(file_path, str(new_price))
-        insert_into_currency(table_name, new_price, difference="↑")
-        logger.info(f"Цена {currency} выросла: {new_price} на {round(new_price - old_price, 2)}")
-    elif old_price > new_price:
-        save_file(file_path, str(new_price))
-        insert_into_currency(table_name, new_price, difference="↓")
-        logger.info(f"Цена {currency} упала: {new_price} на {round(old_price - new_price, 2)}")
-    else:
-        logger.info(f"Цена {currency} не изменилась: {new_price}")
+        if old_price < new_price:
+            save_file(file_path, str(new_price))
+            insert_into_currency(table_name, new_price, difference="↑")
+            logger.info(f"Цена {currency} выросла: {new_price} на {round(new_price - old_price, 2)}")
+        elif old_price > new_price:
+            save_file(file_path, str(new_price))
+            insert_into_currency(table_name, new_price, difference="↓")
+            logger.info(f"Цена {currency} упала: {new_price} на {round(old_price - new_price, 2)}")
+        else:
+            logger.info(f"Цена {currency} не изменилась: {new_price}")
+            
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Сетевая ошибка при запросе {currency}: {e}")
+    except Exception as e:
+        logger.error(f"Непредвиденная ошибка при обработке {currency}: {e}")
 
 
 def main():
     add_database()
     logger.info("Начало цикла парсинга курсов валют")
     while True:
-        try:
-            process_currency('USD', FILE_PATH_DOLLAR, 'Dollars')
-            process_currency('EUR', FILE_PATH_EURO, 'Euros')
-        except Exception as e:
-            logger.error(f"Ошибка: {e}")
-        time.sleep(60)
+        process_currency('USD', FILE_PATH_DOLLAR, 'Dollars')
+        process_currency('EUR', FILE_PATH_EURO, 'Euros')
+        
+        # Скрипт гарантированно заснет на 60 секунд после каждой итерации,
+        # даже если запросы завершились неудачно
+        time.sleep(3600)
 
 
 if __name__ == "__main__":
