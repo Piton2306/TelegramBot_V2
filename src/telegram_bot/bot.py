@@ -7,6 +7,14 @@ from config import TELEGRAM_TOKEN
 from src.database.db_manager import select_last_telegram
 from src.logging_config import setup_logging
 
+import socket
+import socks  # библиотека pysocks
+import requests
+
+# Перенаправляем все системные сокеты на наш прокси
+socks.set_default_proxy(socks.SOCKS5, "192.168.1.110", 10808)
+socket.socket = socks.socksocket
+
 # Настройка логирования
 logger = setup_logging(log_file='telegram.log', logger_name='telegram')
 
