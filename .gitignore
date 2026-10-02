@@ -12,4 +12,4 @@ start_telegram.bat
 /src/parsing/file/
 /src/parsing/logs/
 /src/telegram_bot/logs/
-
+__pycache__
